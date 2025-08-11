@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Star,
   Heart,
@@ -8,51 +8,29 @@ import {
   Truck,
   Shield,
   RotateCcw,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getProduct, getReviews } from '../actions';
-import moment from 'moment';
-import _ from 'lodash';
-
-type Product = {
-  name: string;
-  price: number;
-  originalPrice: number;
-  rating: number;
-  reviewCount: number;
-  description: string;
-  features: string[];
-  sizes: string[];
-  colors: string[];
-  inStock: boolean;
-  images: string[];
-};
-
-type Review = {
-  id: number;
-  name: string;
-  avatar: string;
-  rating: number;
-  date: string;
-  comment: string;
-};
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getProduct, getReviews, getUser } from "../actions";
+import { Product, Review, User } from "@/lib/types";
+import Footer from "@/components/footer";
 
 const ProductDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedSize, setSelectedSize] = useState("M");
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [product, setProduct] = useState<Product>();
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     const fetchData = async () => {
       // Simulate fetching product data
       setProduct(await getProduct());
       setReviews(await getReviews());
+      setUser(await getUser());
     };
 
     fetchData();
@@ -63,15 +41,6 @@ const ProductDetailPage = () => {
     setReviews((prevReviews) => [...prevReviews, ...moreReviews]);
   };
 
-  useEffect(() => {
-    // Eine triviale Nutzung, um Tree-Shaking zu verhindern
-    const now = moment().format('LLLL');
-    const shuffled = _.shuffle([1, 2, 3, 4]);
-    console.log(`Demo-Nutzung: ${now}`, shuffled);
-
-    // ... Ihr bisheriger Datenabruf ...
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -80,24 +49,15 @@ const ProductDetailPage = () => {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">AudioTech</h1>
             <nav className="hidden md:flex space-x-6">
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Products
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                About
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Support
-              </a>
+              {user ? (
+                <Button variant="outline" size="sm">
+                  Logout
+                </Button>
+              ) : (
+                <Button variant="outline" size="sm">
+                  Login
+                </Button>
+              )}
             </nav>
           </div>
         </div>
@@ -107,16 +67,12 @@ const ProductDetailPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
           <div className="space-y-4">
-            <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
-              <img
-                src={product?.images[selectedImage]}
-                alt={product?.name}
-                className="object-cover"
-              />
-              <Badge className="absolute top-4 left-4 bg-red-500">
-                25% OFF
-              </Badge>
-            </div>
+            <img
+              src={product?.images[selectedImage]}
+              alt={product?.name}
+              className="rounded"
+            />
+
             <div className="grid grid-cols-4 gap-2">
               {product?.images.map((image, index) => (
                 <button
@@ -124,8 +80,8 @@ const ProductDetailPage = () => {
                   onClick={() => setSelectedImage(index)}
                   className={`aspect-square relative overflow-hidden rounded-md border-2 ${
                     selectedImage === index
-                      ? 'border-primary'
-                      : 'border-gray-200'
+                      ? "border-primary"
+                      : "border-gray-200"
                   }`}
                 >
                   <img
@@ -149,8 +105,8 @@ const ProductDetailPage = () => {
                       key={i}
                       className={`w-4 h-4 ${
                         i < Math.floor(product?.rating || 0)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
                       }`}
                     />
                   ))}
@@ -214,7 +170,7 @@ const ProductDetailPage = () => {
                   {product?.sizes.map((size) => (
                     <Button
                       key={size}
-                      variant={selectedSize === size ? 'default' : 'outline'}
+                      variant={selectedSize === size ? "default" : "outline"}
                       size="sm"
                       onClick={() => setSelectedSize(size)}
                     >
@@ -229,7 +185,7 @@ const ProductDetailPage = () => {
               <div className="space-y-3">
                 <Button className="w-full" size="lg">
                   <ShoppingCart className="w-4 h-4 mr-2" />
-                  Add to Cart - ${((product?.price || 0) * quantity).toFixed(2)}
+                  Add to Cart
                 </Button>
                 <Button
                   variant="outline"
@@ -238,10 +194,10 @@ const ProductDetailPage = () => {
                 >
                   <Heart
                     className={`w-4 h-4 mr-2 ${
-                      isWishlisted ? 'fill-red-500 text-red-500' : ''
+                      isWishlisted ? "fill-red-500 text-red-500" : ""
                     }`}
                   />
-                  {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                  {isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                 </Button>
               </div>
 
@@ -271,27 +227,7 @@ const ProductDetailPage = () => {
 
         {/* Customer Reviews Section */}
         <div className="mt-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">Customer Reviews</h2>
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.floor(product?.rating || 0)
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="font-medium">{product?.rating} out of 5</span>
-              <span className="text-muted-foreground">
-                ({product?.reviewCount} reviews)
-              </span>
-            </div>
-          </div>
+          <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
 
           <div className="space-y-6">
             {reviews.map((review, index) => (
@@ -314,8 +250,8 @@ const ProductDetailPage = () => {
                           key={i}
                           className={`w-4 h-4 ${
                             i < review.rating
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-gray-300'
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
                           }`}
                         />
                       ))}
@@ -327,15 +263,14 @@ const ProductDetailPage = () => {
             ))}
           </div>
 
-          {
-            <div className="text-center mt-8">
-              <Button variant="outline" onClick={loadMoreReviews}>
-                Load More Reviews
-              </Button>
-            </div>
-          }
+          <div className="text-center mt-8">
+            <Button variant="outline" onClick={loadMoreReviews}>
+              Load More Reviews
+            </Button>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

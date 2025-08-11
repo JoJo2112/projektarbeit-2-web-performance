@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AudioTech: Fallstudie zur Web-Performance
 
-## Getting Started
+Dieses Projekt wurde im Rahmen einer Fallstudie zum Thema Web-Performance und User Experience erstellt. Es dient als praktischer Demonstrator, um die Auswirkungen verschiedener Rendering- und Hydrierungsstrategien auf die Ladezeiten und die wahrgenommene Interaktivität von Webanwendungen zu analysieren.
 
-First, run the development server:
+Die Anwendung ist mit **Next.js (Version 15)**, **React (Version 19)** und **TypeScript** entwickelt und nutzt **Tailwind CSS** für das Styling.
+
+## Projektübersicht
+
+Das Kernstück dieses Projekts ist eine prototypische Produkt-Detailseite für einen fiktiven E-Commerce-Shop namens "AudioTech". Diese Seite wurde in vier unterschiedlichen technischen Varianten implementiert, um einen direkten Vergleich zu ermöglichen.
+
+### Navigation
+
+Von der Startseite der Anwendung aus kann direkt zu jeder der vier implementierten Varianten navigiert werden, um deren Ladeverhalten und Performance live zu testen und zu vergleichen.
+
+## Technische Einrichtung
+
+### Voraussetzungen
+
+- Node.js (Version 20.x oder höher empfohlen)
+- pnpm, npm oder yarn als Paketmanager
+
+### Installation
+
+1.  Klonen Sie das Repository:
+    ```bash
+    git clone <repository-url>
+    ```
+2.  Navigieren Sie in das Projektverzeichnis:
+    ```bash
+    cd projektarbeit-2-web-performance
+    ```
+3.  Installieren Sie die Abhängigkeiten:
+    ```bash
+    npm install
+    ```
+
+### Lokalen Entwicklungsserver starten
+
+Um die Anwendung im Entwicklungsmodus zu starten (mit Turbopack für schnelle Ladezeiten), führen Sie folgenden Befehl aus:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Öffnen Sie [http://localhost:3000](http://localhost:3000) in Ihrem Browser, um die Anwendung zu sehen.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verwendete Technologien
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework:** Next.js 15
+- **Bibliothek:** React 19
+- **Sprache:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI-Komponenten:** shadcn/ui (basierend auf Radix UI)
+- **Icons:** lucide-react
