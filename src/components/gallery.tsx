@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
+import { useState } from 'react';
+import Image from 'next/image';
+import Skeleton from 'react-loading-skeleton';
 
-export function ImageGallery({
+export default function ImageGallery({
   images,
   productName,
 }: {
@@ -22,8 +22,8 @@ export function ImageGallery({
         {images ? (
           <>
             <Image
-              src={images[selectedImage] || ""}
-              alt={productName || "Product image"}
+              src={images[selectedImage] || ''}
+              alt={productName || 'Product image'}
               className="object-cover"
               fill
             />
@@ -39,7 +39,7 @@ export function ImageGallery({
                 key={index}
                 onClick={() => onImageSelect(index)}
                 className={`aspect-square relative overflow-hidden rounded-md border-2 ${
-                  selectedImage === index ? "border-primary" : "border-gray-200"
+                  selectedImage === index ? 'border-primary' : 'border-gray-200'
                 }`}
               >
                 <Image

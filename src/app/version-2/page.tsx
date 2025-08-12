@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Star } from "lucide-react";
-import { getProduct, getUser } from "../actions";
-import { Product, User } from "@/lib/types";
-import Header from "@/components/header";
-import { ImageGallery } from "@/components/gallery";
-import Footer from "@/components/footer";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { Reviews } from "@/components/reviews";
-import { PurchaseBox } from "@/components/purchase-box";
+import { useState, useEffect } from 'react';
+import { Star } from 'lucide-react';
+import { getProduct, getUser } from '../actions';
+import { Product, User } from '@/lib/types';
+import Header from '@/components/header';
+import ImageGallery from '@/components/gallery';
+import Footer from '@/components/footer';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import Reviews from '@/components/reviews';
+import PurchaseBox from '@/components/purchase-box';
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState<Product>();
@@ -18,9 +18,19 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Simulate fetching product data
-      setProduct(await getProduct());
-      setUser(await getUser());
+      try {
+        const promises = [
+          getProduct(), // startet sofort
+          getUser(), // startet sofort
+        ];
+
+        const [productData, userData] = await Promise.all(promises);
+
+        setProduct(productData as Product);
+        setUser(userData as User);
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
+      }
     };
     fetchData();
   }, []);
@@ -49,8 +59,8 @@ const ProductDetailPage = () => {
                           key={i}
                           className={`w-4 h-4 ${
                             i < Math.floor(product.rating)
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-gray-300"
+                              ? 'fill-yellow-400 text-yellow-400'
+                              : 'text-gray-300'
                           }`}
                         />
                       ))}

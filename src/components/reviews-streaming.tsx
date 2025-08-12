@@ -4,24 +4,21 @@ import { Review } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Star } from 'lucide-react';
 import { Button } from './ui/button';
-import { useEffect, useState } from 'react';
+import { use, useState } from 'react';
 import { getReviews } from '@/app/actions';
 import Skeleton from 'react-loading-skeleton';
 
-export default function Reviews({ productId }: { productId?: number }) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function ReviewsStreaming({
+  productId,
+  reviewsSsr,
+}: {
+  productId?: number;
+  reviewsSsr: Promise<Review[]>;
+}) {
+  const reviewsInitial = use(reviewsSsr);
 
-  useEffect(() => {
-    if (!productId) return;
-
-    const fetchReviews = async () => {
-      setReviews(await getReviews(productId));
-      setIsLoading(false);
-    };
-
-    fetchReviews();
-  }, [productId]);
+  const [reviews, setReviews] = useState<Review[]>(reviewsInitial);
+  const [isLoading, setIsLoading] = useState(false);
 
   const loadMoreReviews = async () => {
     setIsLoading(true);
@@ -31,9 +28,7 @@ export default function Reviews({ productId }: { productId?: number }) {
   };
 
   return (
-    <div className="mt-16">
-      <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
-
+    <>
       <div className="space-y-6">
         {reviews.map((review, index) => (
           <div className="border p-6" key={index}>
@@ -74,6 +69,6 @@ export default function Reviews({ productId }: { productId?: number }) {
           Load More Reviews
         </Button>
       </div>
-    </div>
+    </>
   );
 }

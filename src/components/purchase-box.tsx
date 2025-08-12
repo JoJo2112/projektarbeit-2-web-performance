@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { ShoppingCart, Heart, Truck, Shield, RotateCcw } from "lucide-react";
-import { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ShoppingCart, Heart, Truck, Shield, RotateCcw } from 'lucide-react';
+import { useState } from 'react';
 
-export function PurchaseBox({ sizes = ["S", "M", "L"] }) {
+export default function PurchaseBox({ sizes = ['S', 'M', 'L'] }) {
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedSize, setSelectedSize] = useState('M');
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   return (
@@ -39,7 +39,7 @@ export function PurchaseBox({ sizes = ["S", "M", "L"] }) {
           {sizes.map((size) => (
             <Button
               key={size}
-              variant={selectedSize === size ? "default" : "outline"}
+              variant={selectedSize === size ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedSize(size)}
             >
@@ -63,10 +63,10 @@ export function PurchaseBox({ sizes = ["S", "M", "L"] }) {
         >
           <Heart
             className={`w-4 h-4 mr-2 ${
-              isWishlisted ? "fill-red-500 text-red-500" : ""
+              isWishlisted ? 'fill-red-500 text-red-500' : ''
             }`}
           />
-          {isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+          {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
         </Button>
       </div>
 

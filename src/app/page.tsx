@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -16,6 +16,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Link
             href="/version-1"
+            prefetch={false}
             className="group p-6 bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
           >
             <h2 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600">
@@ -26,6 +27,7 @@ export default function Home() {
 
           <Link
             href="/version-2"
+            prefetch={false}
             className="group p-6 bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
           >
             <h2 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600">
@@ -36,6 +38,7 @@ export default function Home() {
 
           <Link
             href="/version-3"
+            prefetch={false}
             className="group p-6 bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
           >
             <h2 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600">
@@ -46,6 +49,7 @@ export default function Home() {
 
           <Link
             href="/version-4"
+            prefetch={false}
             className="group p-6 bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
           >
             <h2 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600">

@@ -1,16 +1,19 @@
 import { Star } from 'lucide-react';
-import { getProduct, getUser, getReviews } from '../actions';
+import { getProduct, getReviews, getUser } from '../actions';
 import Header from '@/components/header';
 import ImageGallery from '@/components/gallery';
 import Footer from '@/components/footer';
 import PurchaseBox from '@/components/purchase-box';
-import ReviewsSsr from '@/components/reviews-ssr';
+import { Suspense } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import ReviewsStreaming from '@/components/reviews-streaming';
 
 const ProductDetailPage = async () => {
   const product = await getProduct();
   const user = await getUser();
 
-  const reviewsSsr = await getReviews(product.id);
+  const reviewsSsr = getReviews(product.id);
 
   return (
     <div className="min-h-screen">
@@ -71,7 +74,14 @@ const ProductDetailPage = async () => {
             <PurchaseBox sizes={product?.sizes} />
           </div>
         </div>
-        <ReviewsSsr productId={product?.id} reviewsSsr={reviewsSsr} />
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
+          <Suspense
+            fallback={<Skeleton count={3} className="mb-6" height={150} />}
+          >
+            <ReviewsStreaming productId={product?.id} reviewsSsr={reviewsSsr} />
+          </Suspense>
+        </div>
       </div>
       <Footer />
     </div>
