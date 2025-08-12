@@ -1,20 +1,15 @@
-import { Star } from "lucide-react";
-import { getProduct, getReviews, getUser } from "../actions";
-import Header from "@/components/header";
-import ImageGallery from "@/components/gallery";
-import Footer from "@/components/footer";
-import PurchaseBox from "@/components/purchase-box";
-import { Suspense } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import ReviewsStreaming from "@/components/reviews-streaming";
-
-export const dynamic = "force-dynamic";
+import { Star } from 'lucide-react';
+import { getProduct, getUser } from '../actions';
+import Header from '@/components/header';
+import ImageGallery from '@/components/gallery';
+import Footer from '@/components/footer';
+import PurchaseBox from '@/components/purchase-box';
+import Reviews from '@/components/reviews';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const ProductDetailPage = async () => {
-  const [product, user] = await Promise.all([getProduct(), getUser()]);
-
-  const reviewsSsr = getReviews(product.id);
+  const product = await getProduct();
+  const user = await getUser();
 
   return (
     <div className="min-h-screen">
@@ -35,8 +30,8 @@ const ProductDetailPage = async () => {
                       key={i}
                       className={`w-4 h-4 ${
                         i < Math.floor(product.rating)
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
+                          ? 'fill-yellow-400 text-yellow-400'
+                          : 'text-gray-300'
                       }`}
                     />
                   ))}
@@ -75,14 +70,7 @@ const ProductDetailPage = async () => {
             <PurchaseBox sizes={product?.sizes} />
           </div>
         </div>
-        <div className="mt-16">
-          <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
-          <Suspense
-            fallback={<Skeleton count={3} className="mb-6" height={150} />}
-          >
-            <ReviewsStreaming productId={product?.id} reviewsSsr={reviewsSsr} />
-          </Suspense>
-        </div>
+        <Reviews productId={product?.id} />
       </div>
       <Footer />
     </div>

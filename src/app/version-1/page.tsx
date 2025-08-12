@@ -28,9 +28,9 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Simulate fetching product data
+      setUser(await getUser());
       setProduct(await getProduct());
       setReviews(await getReviews());
-      setUser(await getUser());
     };
 
     fetchData();

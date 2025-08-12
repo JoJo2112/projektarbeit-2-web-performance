@@ -57,6 +57,17 @@ export default function Home() {
             </h2>
             <p className="text-slate-600 mt-2">SSR Streaming</p>
           </Link>
+
+          <Link
+            href="/version-5"
+            prefetch={false}
+            className="group p-6 bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
+          >
+            <h2 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600">
+              Version 5
+            </h2>
+            <p className="text-slate-600 mt-2">Static Generation</p>
+          </Link>
         </div>
       </div>
     </div>

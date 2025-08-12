@@ -1,10 +1,13 @@
-import { Star } from 'lucide-react';
-import { getProduct, getUser, getReviews } from '../actions';
-import Header from '@/components/header';
-import ImageGallery from '@/components/gallery';
-import Footer from '@/components/footer';
-import PurchaseBox from '@/components/purchase-box';
-import ReviewsSsr from '@/components/reviews-ssr';
+import { Star } from "lucide-react";
+import { getProduct, getUser, getReviews } from "../actions";
+import Header from "@/components/header";
+import ImageGallery from "@/components/gallery";
+import Footer from "@/components/footer";
+import PurchaseBox from "@/components/purchase-box";
+import ReviewsSsr from "@/components/reviews-ssr";
+import "react-loading-skeleton/dist/skeleton.css";
+
+export const dynamic = "force-dynamic";
 
 const ProductDetailPage = async () => {
   const product = await getProduct();
@@ -31,8 +34,8 @@ const ProductDetailPage = async () => {
                       key={i}
                       className={`w-4 h-4 ${
                         i < Math.floor(product.rating)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
                       }`}
                     />
                   ))}
@@ -71,7 +74,10 @@ const ProductDetailPage = async () => {
             <PurchaseBox sizes={product?.sizes} />
           </div>
         </div>
-        <ReviewsSsr productId={product?.id} reviewsSsr={reviewsSsr} />
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
+          <ReviewsSsr productId={product?.id} reviewsSsr={reviewsSsr} />
+        </div>
       </div>
       <Footer />
     </div>
